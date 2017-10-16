@@ -1,0 +1,53 @@
+<div>
+	<h3>Commands</h3>
+	<script>
+		function run_command_success(data){
+			console.log('run command success')
+			console.log(data)
+			if(data.err || data.stderr){
+				$('#commandOutput').html(data.err+'\n'+data.stderr)
+			}
+			$('#commandOutput').html(data.output)
+		}
+		function run_command_error(err){
+			console.log('run command error')
+			console.log(err)
+			handlerAjaxErr(err)
+		}
+		function runCommand(e){
+			var command = $(e).html()
+			console.log(command)
+			$.ajax('/run_command', {
+				method:'POST',
+				data:{cmd:command},
+				success:run_command_success,
+				error:run_command_error
+			})
+		}
+		console.log('This is woooorking')
+		var commandsArray=['pwd', 'ls', 'cd','stat','whoami','pa','uname','ps','netstat','ifconfig','ping']
+		console.log($('#commandList'))
+		commandsArray.forEach(function(i){
+			$('#commandList').append('<li onclick="runCommand(this)" class="btn btn-secondary">'+i+'</li>')
+		})
+	</script>
+	<ul id='commandList' class='inline'>
+	<!-- 	<li class="btn btn-secondary">pwd</li>
+		<li class="btn btn-secondary">ls</li>
+		<li class="btn btn-secondary">cd</li>
+		<li class="btn btn-secondary">stat</li>
+		<li class="btn btn-secondary">whoami</li>
+		<li class="btn btn-secondary">ps</li>
+		<li class="btn btn-secondary">netstat</li>
+		<li class="btn btn-secondary">ifconfig</li>
+		<li class="btn btn-secondary">ping</li>
+		<li class="btn btn-secondary">pwd</li> -->
+	</ul>
+	<p>Possible flag options</p>
+	<ul class='options'>
+		
+	</ul>
+	<label for="user_command">Type command</label>
+	<input type="text" name="user_command">
+	<div id="commandOutput"></div>
+</div>

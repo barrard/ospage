@@ -1,0 +1,16 @@
+.inline li{
+	display: inline;
+	margin: 5px;
+	padding: 5px;
+
+}
+
+#errorResponse{
+	margin: 5px;
+	font-size: 25px;
+	background: red;
+	z-index: 99;
+	position: absolute;
+	top: 100px;
+	left: 100px;
+}

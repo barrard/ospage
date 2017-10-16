@@ -1,0 +1,144 @@
+<div>
+	<script>
+		function enc_success(data){
+			console.log(data)
+			$('#dec_message').html(data.dec)
+			$('#enc_message').html(data.enc)
+		}
+
+		function enc_error(err){
+			console.log('encryption ajax error')
+			console.log(err)
+			handlerAjaxErr(err)
+		}
+		
+		function encBtnClicked(){
+			$.ajax('/cryptoEnc', {
+				method:"POST",
+				data:{
+					type:'dec',
+					msg:$('#message').val(),
+					privKey:$('#privKey').val(),
+					cipher:$('#cipher').val()
+				},
+				success:enc_success,
+				error:enc_error
+			})
+		}
+
+		function decBtnClicked(){
+			$.ajax('/cryptoDec', {
+				method:"POST",
+				data:{
+					type:'dec',
+					msg:$('#message').val(),
+					privKey:$('#privKey').val(),
+					cipher:$('#cipher').val()
+				},
+				success:enc_success,
+				error:enc_error
+			})
+		}
+
+		function hashBtnClicked(){
+			$.ajax('/cryptoHash', {
+				method:"POST",
+				data:{
+					type:'hash',
+					msg:$('#message').val(),
+					hashAlgo:$('#hashAlgo').val()
+				},
+				success:enc_success,
+				error:enc_error
+			})
+		}
+
+		
+
+	</script>
+	<h2>Crypto!</h2>
+
+
+	<div class="row">
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					
+					<label for="cipher">Cipher</label>
+					<input id='cipher' type="text" name="cipher" value="aes-256-ctr">
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<label for="privKey">Private Key</label>
+					<input id='privKey' type="text" name="privKey">
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					
+					<label for="message">Message</label>
+					<input id='message' type="text" name="message">
+
+				</div>
+			</div>
+
+
+
+
+			<div onclick="encBtnClicked()" class="btn btn-success">Encrypt!</div>
+			<div onclick="decBtnClicked()" class="btn btn-primary">Decrypt!</div>
+
+			<div class="row">
+				<div class="col">
+					<strong>Decrypt:</strong><div id="dec_message"></div>
+					<strong>Ecrypt:</strong><div id="enc_message"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			
+
+			<div class="row">
+				<div class="col">
+					
+					<label for="hashAlgo">Hash algo.</label>
+					<input id='hashAlgo' type="text" name="hashAlgo" value="md5">
+
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col">
+					
+					<label for="message">Message</label>
+					<input id='message' type="text" name="message">
+
+				</div>
+			</div>
+
+
+
+
+			<div onclick="hashBtnClicked()" class="btn btn-secondary">Hash!!</div>
+
+			<div class="row">
+				<div class="col">
+					<strong>Hash:</strong><div id="hash"></div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+	
+
+
+</div>
