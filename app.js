@@ -86,7 +86,7 @@ app.post('/run_command', function(req, res){
 	console.log(req.body)
 	console.log('run a command')
 	//send to module commands.js
-	commands(req.body.cmd, res)
+	commands.get_command(req.body.cmd, res)
 })
 
 app.post('/cryptoEnc', function(req, res){
@@ -98,6 +98,15 @@ app.post('/cryptoDec', function(req, res){
 app.post('/cryptoHash', function(req, res){
 	crypto.hash(req.body, res)
 })
+app.get('/get_user_ip_address', function(req, res){
+	commands.get_ip_address(res)
+})
+app.get('/get_daemon_sevice_list', function(req, res){
+	commands.get_daemon_sevice_list(res)
+})
+
+
+
 
 
 

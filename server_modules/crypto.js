@@ -43,7 +43,19 @@ function decrypt(reqBody, res){
 }
 
 function hash(reqBody, res){
-	console.log('GO TO BED' )
+	console.log(reqBody )
+	var type = reqBody.type
+	var msg = reqBody.msg
+	var algo = reqBody.hashAlgo
+	var hash = crypto.createHash(algo);
+	hash.update(msg)
+	hash = hash.digest('hex')
+
+	res.send({
+		hash:hash,
+		msg:msg
+	})
+
 
 }
 

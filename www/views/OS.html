@@ -1,5 +1,66 @@
-<h2>OS security</h2>
-<ul>
-	<li>disable guest account <button id="disableGuestLogin">Disable</button></li>
-	<li>ensure pasword strength</li>
-</ul>
+<script>
+	var time_since_services_update=0
+		clearInterval(timerInterval);
+
+	var timerInterval = setInterval(function service_timer(){
+		time_since_services_update++
+		$('#time_since_services_update').html(time_since_services_update)
+	}, 1000)
+
+	function service_list_success(data){
+		if(!data.err){
+			var service_list_array = data.service_list.split('\n')
+			var $ul = $('#service_daemon_list')
+			service_list_array.forEach(function(i){
+				var li = '<li>'+i+'</li>'
+				$ul.append(li)
+				x++
+			})
+			console.log()
+		}else{
+			handlerAjaxErr(data.err)
+		}
+
+	}
+	function service_list_error(err){
+		console.log(err)
+		handlerAjaxErr(err)
+
+
+	}
+	function get_daemon_sevice_list(){
+		$.ajax('/get_daemon_sevice_list',{
+			success:service_list_success,
+			error:service_list_error
+		})
+	}
+
+	get_daemon_sevice_list()
+	$('#get_services_list_button').on('click', function(){
+		get_daemon_sevice_list()
+		time_since_services_update=0
+
+	})
+	
+</script>
+
+
+<div class="row">
+	<div class="col">
+		<h2>OS security</h2>
+		<ul>
+			<li>disable guest account <button id="disableGuestLogin">Disable</button></li>
+			<li>ensure pasword strength</li>
+		</ul>
+
+
+	</div>
+	<div class="col">
+		<h3>services?</h3>
+		<button id='get_services_list_button' type="button" class="btn btn-dark">Update services</button>
+		<p>time since list update <span id='time_since_services_update'></span></p>
+		<ol id='service_daemon_list'>
+			
+		</ol>
+	</div>
+</div>

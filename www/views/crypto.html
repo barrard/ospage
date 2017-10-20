@@ -11,13 +11,24 @@
 			console.log(err)
 			handlerAjaxErr(err)
 		}
+		function hash_success(data){
+			console.log(data)
+			$('#hashed_message').html(data.hash)
+			$('#message_prehashed').html(data.msg)
+		}
+
+		function hash_error(err){
+			console.log('encryption ajax error')
+			console.log(err)
+			handlerAjaxErr(err)
+		}
 		
 		function encBtnClicked(){
 			$.ajax('/cryptoEnc', {
 				method:"POST",
 				data:{
 					type:'dec',
-					msg:$('#message').val(),
+					msg:$('#crypt_message').val(),
 					privKey:$('#privKey').val(),
 					cipher:$('#cipher').val()
 				},
@@ -31,7 +42,7 @@
 				method:"POST",
 				data:{
 					type:'dec',
-					msg:$('#message').val(),
+					msg:$('#crypt_message').val(),
 					privKey:$('#privKey').val(),
 					cipher:$('#cipher').val()
 				},
@@ -45,11 +56,11 @@
 				method:"POST",
 				data:{
 					type:'hash',
-					msg:$('#message').val(),
+					msg:$('#hash_message').val(),
 					hashAlgo:$('#hashAlgo').val()
 				},
-				success:enc_success,
-				error:enc_error
+				success:hash_success,
+				error:hash_error
 			})
 		}
 
@@ -81,8 +92,8 @@
 			<div class="row">
 				<div class="col">
 					
-					<label for="message">Message</label>
-					<input id='message' type="text" name="message">
+					<label for="crypt_message">Message</label>
+					<input id='crypt_message' type="text" name="crypt_message">
 
 				</div>
 			</div>
@@ -116,8 +127,8 @@
 			<div class="row">
 				<div class="col">
 					
-					<label for="message">Message</label>
-					<input id='message' type="text" name="message">
+					<label for="hash_message">Message</label>
+					<input id='hash_message' type="text" name="hash_message">
 
 				</div>
 			</div>
@@ -129,7 +140,8 @@
 
 			<div class="row">
 				<div class="col">
-					<strong>Hash:</strong><div id="hash"></div>
+					<strong>Hash:</strong><div id="hashed_message"></div>
+					<strong>Message:</strong><div id="message_prehashed"></div>
 				</div>
 			</div>
 
@@ -138,6 +150,12 @@
 		</div>
 	</div>
 
+
+	<div class="row">
+		<div class="col">
+			<h3>OpenSSL??</h3>
+		</div>
+	</div>
 	
 
 

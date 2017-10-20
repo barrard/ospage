@@ -5,14 +5,20 @@
 			console.log('run command success')
 			console.log(data)
 			if(data.err || data.stderr){
+				console.log('We should be printing an error')
+				console.log(data.err)
+				console.log(data.stderr)
+				handle_err(data.stderr)
 				$('#commandOutput').html(data.err+'\n'+data.stderr)
+			}else{
+				$('#commandOutput').html(data.output)
+
 			}
-			$('#commandOutput').html(data.output)
 		}
 		function run_command_error(err){
 			console.log('run command error')
 			console.log(err)
-			handlerAjaxErr(err)
+			handle_err(err)
 		}
 		function runCommand(e){
 			var command = $(e).html()
@@ -25,7 +31,7 @@
 			})
 		}
 		console.log('This is woooorking')
-		var commandsArray=['pwd', 'ls', 'cd','stat','whoami','pa','uname','ps','netstat','ifconfig','ping']
+		var commandsArray=['pw', 'ls', 'cd','stat','whoami','pa','uname','ps','netstat','ifconfig','ping']
 		console.log($('#commandList'))
 		commandsArray.forEach(function(i){
 			$('#commandList').append('<li onclick="runCommand(this)" class="btn btn-secondary">'+i+'</li>')
