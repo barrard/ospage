@@ -41,7 +41,7 @@ function get_ip_address(res){
 }
 
 function get_daemon_sevice_list(res){
-	var command = 'servic --status-all'
+	var command = 'service --status-all'
 	var resp = {}
 	cmd.get(command, function(err, data, stderr){
 		if(err){
