@@ -1,4 +1,3 @@
-console.log('hi')
 window.onload = function(){init()}
 function init(){
 	console.log('INIT THIS BITCH')
@@ -15,6 +14,8 @@ function handle_err(err){
 	} 
 	else if(err.err) {
 		err_msg=err.err
+	}else if(err.cmd){
+		err_msg=err.cmd+': bad command'
 	}else{
 		err_msg=err
 	}
