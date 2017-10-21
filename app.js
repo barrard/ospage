@@ -104,6 +104,12 @@ app.get('/get_user_ip_address', function(req, res){
 app.get('/get_daemon_sevice_list', function(req, res){
 	commands.get_daemon_sevice_list(res)
 })
+app.get('/get_cpu_data', function(req, res){
+	commands.get_cpu_data(res)
+})
+app.get('/get_cpu_frequency', function(req, res){
+	commands.get_cpu_frequency(res)
+})
 
 
 
@@ -115,6 +121,6 @@ app.listen(port)
 console.log('listening on port '+port)
 
 console.log('EOL is '+os.EOL)
-console.log('arch is '+os.arch)
+console.log('arch is '+os.arch())
 console.log('username '+process.env.USER)
 console.log('desktop  '+process.env.XDG_SESSION_DESKTOP)
