@@ -53,6 +53,7 @@ function get_user_ip_address(){
 
 // CPU graphic logic code functions ===================================
 var active_cpu_watch = false
+var cpu_graphic_made = false
 var timerInterval
 
 $('#watch_cpu_btn').on('click', function(e){
@@ -77,11 +78,34 @@ $('#watch_cpu_btn').on('click', function(e){
 	}
 })
 function handle_get_cpu_data_success(data){
-	console.log(data)
+	var main_CPU_data_array = [
+		'Architecture',
+		'Model name',
+		'CPU max MHz',
+		'CPU min MHz',
+		'L1d cache',
+		'L1i cache',
+		'L1 cache',
+		'L2 cache',
+		'L3 cache',
+		'L4 cache'
+
+	]
+	// console.log(data)
 	//this gives about 26 lines
 	//Architecture, CPU(s), "Model name", CPU min MHz, CPU max MHz
 	data.data.forEach((i)=>{
-		console.log(i.split(':'))
+		// console.log(i.split(':'))
+		var line = i.split(':')
+		if(main_CPU_data_array.indexOf(line[0])!=-1){
+			console.log(line[0])
+			//append this data in the order its found is crazy but works
+			//run the functiong to append to the table
+			//tr id = "main_CPU_data"
+			var data = line[1]
+			var td = "<td>"+data+"</td>"
+			$('#main_CPU_data').append(td)
+		}
 	})
 }
 function handle_get_cpu_frequency_success(data){
@@ -101,8 +125,9 @@ function CPU_grapic_make(){
 		error:handle_err
 	})
 }
-
-CPU_grapic_make()
+if(!cpu_graphic_made){
+	CPU_grapic_make()	
+}
 
 //end CPU graphic code logic=============================================
 

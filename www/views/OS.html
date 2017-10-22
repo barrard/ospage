@@ -8,7 +8,7 @@
 	}, 1000)
 
 	function service_list_success(data){
-		$('#service_list_spinner').toggleClass('hide')
+		$('#service_list_spinner').addClass('hide')
 		if(!data.err){
 			var service_list_array = data.service_list.split('\n')
 			var $ul = $('#service_daemon_list')
@@ -16,14 +16,13 @@
 				var li = '<li>'+i+'</li>'
 				$ul.append(li)
 			})
-			console.log()
 		}else{
 			handle_err(data.err)
 		}
 
 	}
 	function service_list_error(err){
-		$('#service_list_spinner').toggleClass('hide')
+		$('#service_list_spinner').removeClass('hide')
 		console.log(err)
 		handle_err(err)
 
@@ -39,7 +38,7 @@
 	get_daemon_sevice_list()
 	$('#get_services_list_button').on('click', function(){
 		$('#service_daemon_list').html('')
-		$('#service_list_spinner').toggleClass('hide')
+		$('#service_list_spinner').removeClass('hide')
 		get_daemon_sevice_list()
 		time_since_services_update=0
 
