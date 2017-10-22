@@ -5,6 +5,25 @@
 
 }
 
+.inline{
+  display: inline;  
+}
+
+.cpu_core_square{
+  transition: all 0.5s ease-out;
+  padding: 10px;
+  margin: 5px;
+  display: inline;
+/*  height: 150px;
+  min-width: 150px;*/
+  border: 1px black solid;
+}
+
+.cpu_core_inactive{
+  background: rgba(62, 69, 81, 0.5);
+  opacity: 0.5;
+}
+
 #errorResponse{
 	margin: 5px;
 	font-size: 25px;

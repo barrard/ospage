@@ -14,24 +14,19 @@
 	<div class="container">
 		<div>IP address = <span id='user_ip_address'></span></div>
 		<div id="CPU_graphic">
-			CPU
-			<button id='watch_cpu_btn' type="button" class="btn btn-info">Watch CPU</button>
+			<div class="row">
+				<div class="col">
+					<button id='watch_cpu_btn' type="button" class="btn btn-info inline">Watch CPU cores</button>
+					<div class="inline" id="cpu_cores_container"></div>
+				</div>
+			</div>
 			<table class="table">
 			  <thead>
-			    <tr>
-			      <th>Architectiure</th>
-			      <th>Model Name</th>
-			      <th>Max MHz</th>
-			      <th>Min MHz</th>
-			      <th>L1 Cache</th>
-			      <th>L2 Cache</th>
-			      <th>L3 Cache</th>
-
+			    <tr id="main_CPU_head">
 			    </tr>
 			  </thead>
 			  <tbody>
 			    <tr id='main_CPU_data'>
-
 			    </tr>
 			  </tbody>
 			</table>
