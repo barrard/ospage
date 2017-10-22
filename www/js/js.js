@@ -8,8 +8,8 @@ Number.prototype.map = function (in_min, in_max, out_min, out_max) {
   return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-function red_or_green(core_MHz, core_id){
-	var core_color = ~~core_MHz.map(1400, 3500, 0, 510)
+function red_or_green(core_MHz, core_id, MHz_min, MHz_max){
+	var core_color = ~~core_MHz.map(MHz_min, MHz_max, 0, 510)
 
 	if(core_color < 255){
 		// console.log('This should be green-yellow')
@@ -77,6 +77,7 @@ function get_user_ip_address(){
 var active_cpu_watch = false
 var cpu_graphic_made = false
 var timerInterval
+var MHz_min, MHz_max;
 
 function remove_cpu_inacitve_class(){
 	Array.prototype.forEach.call($('.cpu_core_square'), function(i){
@@ -157,6 +158,12 @@ function handle_get_cpu_data_success(data){
 			console.log('cores is '+line[1])
 			make_cpu_squares(parseInt(line[1]))
 		}
+		if(line[0]==='CPU max MHz'){
+			MHz_max = line[1]
+		}
+		if(line[0]==='CPU min MHz'){
+			MHz_min = line[1]
+		}
 		if(main_CPU_data_array.indexOf(line[0])!=-1){
 			console.log(line[0])
 			//append this data in the order its found is crazy but works
@@ -174,10 +181,12 @@ function handle_get_cpu_data_success(data){
 	})
 }
 function handle_get_cpu_frequency_success(data){
-	var cores_array = data.data.slice(0, -1)
+	(function(){var cores_array = data.data.slice(0, -1)
 	var core_avg=0;
 	var core_count = 0
 	console.log(cores_array)
+	console.log(MHz_max)
+	console.log(MHz_min)
 	var core_id
 	var core_MHz = 0
 	cores_array.forEach((i, ind)=>{
@@ -193,13 +202,13 @@ function handle_get_cpu_frequency_success(data){
 			core_MHz = parseInt(i.split(':')[1])
 			console.log('core mhz is '+core_MHz)
 			// console.log('THE STARTING CORE_COLOR IS '+core_color)
-			red_or_green(core_MHz, core_id)
+			red_or_green(core_MHz, core_id, MHz_min, MHz_max)
 
 			core_avg+=core_MHz
 		}
 
 		console.log('cpu_core_'+core_id+' should be MHZ '+core_MHz)
-		console.log('maps too '+~~core_MHz.map(1400, 3500, 0, 510))
+		console.log('maps too '+~~core_MHz.map(MHz_min, MHz_max, 0, 510))
 
 
 
@@ -208,8 +217,9 @@ function handle_get_cpu_frequency_success(data){
 	core_avg /=core_count
 	//          ~~ === Math.floor()
 	console.log(~~core_avg)
-	red_or_green(~~core_avg,'avg')
+	red_or_green(~~core_avg,'avg', MHz_min, MHz_max)})(MHz_min, MHz_max)
 }
+
 function get_cpu_frequency(){
 	$.ajax('/get_cpu_frequency',{
 		success:handle_get_cpu_frequency_success,
