@@ -9,9 +9,9 @@
 				console.log(data.err)
 				console.log(data.stderr)
 				handle_err(data.stderr)
-				$('#commandOutput').html(data.err+'\n'+data.stderr)
+				$('#commandOutput').text(data.err+'\n'+data.stderr)
 			}else{
-				$('#commandOutput').html(data.output)
+				$('#commandOutput').text(data.output)
 
 			}
 		}
@@ -31,7 +31,7 @@
 			})
 		}
 		console.log('This is woooorking')
-		var commandsArray=['pw', 'ls', 'cd','stat','whoami','pa','uname','ps','netstat','ifconfig','ping']
+		var commandsArray=['pwd', 'ls', 'cd','stat','whoami','pa','uname','ps','netstat','ifconfig','ping']
 		console.log($('#commandList'))
 		commandsArray.forEach(function(i){
 			$('#commandList').append('<li onclick="runCommand(this)" class="btn btn-secondary">'+i+'</li>')
@@ -55,5 +55,5 @@
 	</ul>
 	<label for="user_command">Type command</label>
 	<input type="text" name="user_command">
-	<div id="commandOutput"></div>
+	<div class='pre-wrap' id="commandOutput"></div>
 </div>

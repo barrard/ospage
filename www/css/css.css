@@ -9,14 +9,26 @@
   display: inline;  
 }
 
+
 .cpu_core_square{
+  border-radius: 4px;
   transition: all 0.5s ease-out;
-  padding: 10px;
-  margin: 5px;
+  padding: 0.3em 20px 0.6em 20px ;
+  margin: 0 1px 0 1px;
+  position: relative;
   display: inline;
 /*  height: 150px;
   min-width: 150px;*/
   border: 1px black solid;
+}
+
+
+.cpu_core_square > p {
+  font-size: 15px;
+  display: inline;
+  position: absolute;
+  top:5px;
+  right:5px;
 }
 
 .cpu_core_inactive{
@@ -36,6 +48,10 @@
 
 .hide{
 	display: none;
+}
+
+.pre-wrap{
+  white-space: pre-wrap; 
 }
 
 

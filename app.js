@@ -4,6 +4,12 @@ var bodyParser = require('body-parser');
 var commands = require('./server_modules/commands')
 var crypto = require('./server_modules/crypto')
 var app = express();
+var server = require('http').Server(app);
+
+var io = require('socket.io')(server);
+
+
+
 app.engine('html', require('ejs').renderFile);
 app.use(express.static('www'));
 app.use(bodyParser.json()); // for parsing application/json
@@ -107,17 +113,32 @@ app.get('/get_daemon_sevice_list', function(req, res){
 app.get('/get_cpu_data', function(req, res){
 	commands.get_cpu_data(res)
 })
+app.get('/get_mem_data', function(req, res){
+	commands.get_mem_data(res)
+})
+
+
 app.get('/get_cpu_frequency', function(req, res){
 	commands.get_cpu_frequency(res)
 })
 
 
+io.on('connection', function (socket) {
+	var auto_reload = require('./auto_reload.js')(socket, app.get('publicRoot'))
+
+  socket.emit('connection');
+  socket.on('disconnect', function (data) {
+    console.log("socket disconect");
+
+  });
+});
 
 
 
 
 var port = 8080
-app.listen(port)
+server.listen(port)
+
 console.log('listening on port '+port)
 
 console.log('EOL is '+os.EOL)
