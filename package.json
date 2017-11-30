@@ -1,13 +1,8 @@
 {
-  "name": "express_os_sec",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  "name": "ospage",
+  "main": "app.js",
   "license": "ISC",
+  "repository": "https://github.com/barrard/ospage",
   "dependencies": {
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
