@@ -1,12 +1,14 @@
-var watch = require('node-watch');
+const watch = require('node-watch')
+const join = require('path').join
 
+// Directory to watch for changes.
+const directory = join(__dirname, 'www')
 
-module.exports = function(socket, publicRoot){
-  console.log(publicRoot.root)
-  watch('/home/sailor/express_os_sec/www/', { recursive: true }, function(event_type, filename){
-    console.log(event_type)
-    socket.emit('auto_reload');
-    
-  })
-  // console.log(watch)
-}
+// Emit event recursively.
+const options = { recursive: true }
+
+// Event to emit if a something changes.
+const event = 'auto_reload'
+
+// Publish AutoReload function.
+module.exports = (socket) => watch(directory, options, () => socket.emit(event))
